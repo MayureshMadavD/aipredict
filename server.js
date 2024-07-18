@@ -1,33 +1,23 @@
-const { google } = require("googleapis")
-require('dotenv').config();
+import { getSheetFromData } from "./main.js"; 
+import express from "express";
 
 
-const sheetName = ['Mayuresh', 'Rohit', 'Anek', 'Deepak', 'Ankit', 'Mukul', 'Nishant','Shruthi','Shahbaz']
+const app = express()
+const port = 2000
 
-const triggerApiCall = async (sheetName) => {
-    try {
+app.get('/', (req, res) => {
+  res.send('server running')
+})
 
-        const auth = new google.auth.GoogleAuth({
-            keyFile: "credentials.json",
-            scopes: 'https://www.googleapis.com/auth/spreadsheets'
-        })
+app.post('/customerd',(req,res) =>{
+ try{
+    const reqs = req    ;
+    console.log(reqs)
+ }catch(e){
+    console.log(e)
+ }
+})
 
-        const client = await auth.getClient();
-        const googleSheets = google.sheets({ version: 'v4', auth: client })
-
-        const spreadsheetId = '1dYLZVLet1BycvkWYFOOczHPhQPHuYe3MBqnEUiWsbjs';
-        
-
-
-    } catch (e) {
-        console.log("Not Data To Push")
-    }
-
-}
-
-
-
-
-
-
-//triggerApiCall(sheetName)
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
