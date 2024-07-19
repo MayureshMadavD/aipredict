@@ -24,3 +24,27 @@ export const getSheetFromData = async () => {
     return [];
   }
 };
+
+
+// Function convert google sheet data to JSON
+export function convertArrayToJSON(data) {
+  // Extract the keys from the first array
+  const keys = data[0];
+  const result = [];
+  for (let i = 1; i < data.length; i++) {
+      const values = data[i];
+      const obj = {};
+      keys.forEach((key, index) => {
+          obj[key.trim()] = values[index];
+      });      
+      result.push(obj);
+  }
+  
+  return result;
+}
+
+
+// function to get filter json data based on customer id
+export function getObjectsByCustomerId(data, customerId) {
+  return data.filter(item => item.customer_id === customerId);
+}
