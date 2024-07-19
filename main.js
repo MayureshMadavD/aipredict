@@ -1,4 +1,7 @@
 import { google } from "googleapis";
+import dovenv from 'dotenv'
+import axios from 'axios'
+dovenv.config()
 
 //Main function to fetch Database Data
 export const getSheetFromData = async () => {
@@ -47,4 +50,32 @@ export function convertArrayToJSON(data) {
 // function to get filter json data based on customer id
 export function getObjectsByCustomerId(data, customerId) {
   return data.filter(item => item.customer_id === customerId);
+}
+
+
+export function formatCustomerData(data) {
+  return data.map(obj => {
+      return `Customer ID: ${obj.customer_id}, Product: ${obj.product_name}, Count: ${obj.count}`;
+  }).join('\n');
+}
+
+
+export async function getChatGPTResponse(prompt) {
+  try {
+    const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: prompt }],
+      max_tokens: 1000,
+      temperature: 0.7
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.SECRET_KEY}`
+      }
+    });
+    return response.data.choices[0].message.content.trim();
+  } catch (error) {
+    console.error('Error fetching response from ChatGPT:', error.response ? error.response.data : error.message);
+    return null;
+  }
 }
