@@ -55,7 +55,7 @@ export function getObjectsByCustomerId(data, customerId) {
 
 export function formatCustomerData(data) {
   return data.map(obj => {
-      return `Customer ID: ${obj.customer_id}, Product: ${obj.product_name}, Count: ${obj.count}`;
+      return `Customer ID: ${obj.customer_id}, Product: ${obj.product_name}, Count: ${obj.abc_count} , Name: ${obj.customer_name}`;
   }).join('\n');
 }
 
