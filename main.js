@@ -19,7 +19,7 @@ export const getSheetFromData = async () => {
     const getRows = await googleSheets.spreadsheets.values.get({
       auth,
       spreadsheetId,
-      range: "user_behaviour!A:G",
+      range: "user_behaviour!A:J",
     });
 
     return getRows.data || [];
@@ -55,7 +55,7 @@ export function getObjectsByCustomerId(data, customerId) {
 
 export function formatCustomerData(data) {
   return data.map(obj => {
-      return `Customer ID: ${obj.customer_id}, Product: ${obj.product_name}, Count: ${obj.abc_count} , Name: ${obj.customer_name}`;
+      return `Customer ID: ${obj.customer_id}, Product: ${obj.product_name}, Count: ${obj.order_count} , Name: ${obj.customer_name} , orderStatus: ${obj.order_status} , productUrl: ${obj.product_url} , productImg: ${obj.product_img} `;
   }).join('\n');
 }
 
